@@ -1,0 +1,24 @@
+{
+  "name": "bamazon-homework",
+  "version": "1.0.0",
+  "description": "mysql and node",
+  "main": "index.js",
+  "dependencies": {
+    "inquirer": "^4.0.0",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brnjin/Node-MySQL-homework.git"
+  },
+  "author": "Brian J",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brnjin/Node-MySQL-homework/issues"
+  },
+  "homepage": "https://github.com/brnjin/Node-MySQL-homework#readme"
+}
