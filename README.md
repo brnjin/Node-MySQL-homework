@@ -14,5 +14,4 @@
 	*inquirer
 
 ##### Below is the link to a video demonstrating the app functions 
-https://www.youtube.com/watch?v=jIWNt1HktaI - automatic!
-[Youtube](https://www.youtube.com/watch?v=jIWNt1HktaI)
+[Youtube link](https://www.youtube.com/watch?v=jIWNt1HktaI)
