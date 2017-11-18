@@ -1,7 +1,11 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var productID;
-var productQuantity;
+var userBought;
+var originalQuantity;
+var updatedQuantity;
+var itemPrice;
+var calculatedQuantity;
 
 var connection = mysql.createConnection({
 	host: "localhost",
@@ -20,8 +24,8 @@ function displayItems(){
 	connection.query("SELECT * FROM products", function(err, res) {
 		for (var i = 0; i < res.length; i++) {
 
-		console.log(res[i].item_id + "   " + res[i].product_name);
-
+		console.log(res[i].item_id + "   " + res[i].product_name + "   " 
+			+ res[i].department_name + "   " + res[i].price + "   " + res[i].stock_quantity);
 		}
 		userQuestion1();
 	});
@@ -41,10 +45,9 @@ function userQuestion1() {
 		}
 		else{
 			productID = number.item_id;
-			console.log(productID)
 			var query = "SELECT stock_quantity FROM products WHERE ?"
 			connection.query(query, {item_id: productID}, function(err, res){
-				console.log(res);
+				originalQuantity = res[0].stock_quantity;
 				userQuestion2();
 			})
 		};
@@ -64,23 +67,38 @@ function userQuestion2() {
 			connection.end();
 		}
 		else{
-			productQuantity = number.quantity;
+			userBought = number.quantity;
+			if (userBought > originalQuantity) {
+				console.log("Insufficient quantity!")
+				displayItems();
+			}
+			else{
+				var query = "SELECT price FROM products WHERE ?"
+				connection.query(query, {item_id: productID}, function(err, res){
+				itemPrice = res[0].price;
+				console.log("Your total is " + (parseInt(userBought) * parseInt(itemPrice)) + " dollars.");
+				})
+				calculatedQuantity = (parseInt(originalQuantity) - parseInt(userBought));
+				updateItem();
+			}
 		}
-		/*parseInt(number.item_id)*/
-		console.log(number.quantity)
-		/*	updateItem();*/
+	connection.end();
 	});
 };
 
-/*var calculatedQuantity = databaseQuantity-number.quantity*/
 
+//Updating once the customer buys 
 function updateItem() {
 	var query = connection.query(
-		"UPDATE products SET ? WHERE ?", [{
-			item_id: productID
-		},{
-/*			stock_quantity: calculatedQuantity*/
-		}],
+		"UPDATE products SET ? WHERE ?", 
+		[
+			{
+				stock_quantity: calculatedQuantity				
+			},
+			{
+				item_id: productID
+			}
+		],
 		function(err, res) {
 			if(err) throw err;
 		});

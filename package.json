@@ -4,6 +4,7 @@
   "description": "mysql and node",
   "main": "index.js",
   "dependencies": {
+    "console.table": "^0.9.1",
     "inquirer": "^4.0.0",
     "mysql": "^2.15.0"
   },
